@@ -44,6 +44,7 @@ export default function NavMenu() {
             >
                 <Link to='/services' className="flex items-center">Services</Link>
             </Typography>
+
             <Typography
                 as="li"
                 variant="small"
@@ -55,7 +56,7 @@ export default function NavMenu() {
             {
                 user?.email ?
                     <>
-                        <Link className='ms-4' to="/profile">
+                        {/* <Link className='ms-4' to="/profile">
                             {user?.photoURL ?
                                 <img
                                     style={{ height: '40px', width: '40px' }}
@@ -64,7 +65,25 @@ export default function NavMenu() {
                                 </img>
                                 : <>{user.email}</>
                             }
-                        </Link>
+                        </Link> */}
+                        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+                            <Typography
+                                as="li"
+                                variant="small"
+                                color="blue-gray"
+                                className="p-1 font-normal"
+                            >
+                                <Link to='/' className="flex items-center">My Reviews</Link>
+                            </Typography>
+                            <Typography
+                                as="li"
+                                variant="small"
+                                color="blue-gray"
+                                className="p-1 font-normal"
+                            >
+                                <Link to='/services' className="flex items-center">Add Service</Link>
+                            </Typography>
+                        </ul>
                         <Button className='ms-3 cs-btn' variant="light" onClick={handleLogOut}>Log out</Button>
                     </>
                     :
@@ -89,12 +108,13 @@ export default function NavMenu() {
                     variant="small"
                     className="mr-4 cursor-pointer py-1.5 font-normal"
                 >
-                    <span>Material Tailwind</span>
+                    <span>Tax Advisor</span>
+                    {/* <span>Material Tailwind</span> */}
                 </Typography>
                 <div className="hidden lg:block">{navList}</div>
-                <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+                {/* <Button variant="gradient" size="sm" className="hidden lg:inline-block">
                     <span>Buy Now</span>
-                </Button>
+                </Button> */}
                 <IconButton
                     variant="text"
                     className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -133,12 +153,12 @@ export default function NavMenu() {
                     )}
                 </IconButton>
             </div>
-            <MobileNav open={openNav}>
+            {/* <MobileNav open={openNav}>
                 {navList}
                 <Button variant="gradient" size="sm" fullWidth className="mb-2">
                     <span>Buy Now</span>
                 </Button>
-            </MobileNav>
+            </MobileNav> */}
         </Navbar>
     );
 }

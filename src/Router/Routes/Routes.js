@@ -5,6 +5,7 @@ import LogIn from "../../Pages/Join/LogIn/LogIn";
 import Register from "../../Pages/Join/Register/Register";
 import ServiceDetail from "../../Pages/Services/ServiceDetails.js/ServiceDetail";
 import Services from "../../Pages/Services/Services";
+import PrivateRoute from "../PrivateRoute ";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/services',
-                element: <Services></Services>
+                element: <PrivateRoute><Services></Services></PrivateRoute>
             },
             {
                 path: '/services/:id',
