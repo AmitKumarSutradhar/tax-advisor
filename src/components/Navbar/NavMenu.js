@@ -6,6 +6,7 @@ import {
     Button,
     IconButton,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export default function NavMenu() {
     const [openNav, setOpenNav] = useState(false);
@@ -25,9 +26,7 @@ export default function NavMenu() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="/" className="flex items-center">
-                    Pages
-                </a>
+                <Link to='/' className="flex items-center">Home</Link>
             </Typography>
             <Typography
                 as="li"
@@ -35,9 +34,7 @@ export default function NavMenu() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="/" className="flex items-center">
-                    Account
-                </a>
+                <Link to='/services' className="flex items-center">Services</Link>
             </Typography>
             <Typography
                 as="li"
@@ -45,9 +42,7 @@ export default function NavMenu() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="/" className="flex items-center">
-                    Blocks
-                </a>
+                <Link to='/blog' className="flex items-center">Blog</Link>
             </Typography>
             <Typography
                 as="li"
