@@ -5,6 +5,7 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const ServiceBox = ({ service }) => {
     const { _id, img, price, title } = service;
+    console.log(_id);
     return (
         <div className="card card-compact w-96 bg-base-100 shadow-xl">
             <PhotoProvider>
