@@ -50,8 +50,8 @@ export default function NavMenu() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <a href="/" className="flex items-center">
-                    Docs
+                <a href="/login" className="flex items-center">
+                    Login
                 </a>
             </Typography>
         </ul>
