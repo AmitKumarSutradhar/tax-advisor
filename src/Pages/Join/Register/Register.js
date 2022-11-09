@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-import { Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button, } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 
 const Register = () => {
@@ -11,6 +10,7 @@ const Register = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
+        console.log('Password', password);
 
         createUser(email, password)
             .then(result => {
@@ -21,43 +21,28 @@ const Register = () => {
     }
 
     return (
-        <form onSubmit={handleSignUp} className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-            <Card className="w-96 mx-auto my-10">
-                <CardHeader
-                    variant="gradient"
-                    color="blue"
-                    className="mb-4 grid h-28 place-items-center"
-                >
-                    <Typography variant="h3" color="white">
-                        Register Now
-                    </Typography>
-                </CardHeader>
-                <CardBody className="flex flex-col gap-4">
-                    <Input label="Email" size="lg" />
-                    <Input label="Password" size="lg" />
-                    <div className="-ml-2.5">
-                        <Checkbox label="Remember Me" />
-                    </div>
-                </CardBody>
-                <CardFooter className="pt-0">
-                    <Button variant="gradient" fullWidth>
-                        Sign In
-                    </Button>
-                    <Typography variant="small" className="mt-6 flex justify-center">
-                        Don't have an account?
-                        <Typography
-                            as="a"
-                            href="#signup"
-                            variant="small"
-                            color="blue"
-                            className="ml-1 font-bold"
-                        >
-                            <Link to='/login'></Link>
-                        </Typography>
-                    </Typography>
-                </CardFooter>
-            </Card>
-        </form>
+        <div class="w-1/2 mx-auto">
+            <form onSubmit={handleSignUp} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Email
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="email" name='email' placeholder="Enter your email" />
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                        Password
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name='password' type="password" placeholder="******************" />
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Register
+                    </button>
+                </div>
+                <p>Already Have an Accoutn ? Please <Link to='/login'>Log In</Link></p>
+            </form>
+        </div>
     );
 };
 

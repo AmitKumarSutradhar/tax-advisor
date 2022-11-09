@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
     Navbar,
     MobileNav,
@@ -7,9 +7,17 @@ import {
     IconButton,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 export default function NavMenu() {
     const [openNav, setOpenNav] = useState(false);
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.error(error))
+    }
 
     useEffect(() => {
         window.addEventListener(
@@ -44,16 +52,31 @@ export default function NavMenu() {
             >
                 <Link to='/blog' className="flex items-center">Blog</Link>
             </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <a href="/login" className="flex items-center">
-                    Login
-                </a>
-            </Typography>
+            {
+                user?.email ?
+                    <>
+                        <Link className='ms-4' to="/profile">
+                            {user?.photoURL ?
+                                <img
+                                    style={{ height: '40px', width: '40px' }}
+                                    roundedCircle
+                                    src={user?.photoURL} alt=''>
+                                </img>
+                                : <>{user.email}</>
+                            }
+                        </Link>
+                        <Button className='ms-3 cs-btn' variant="light" onClick={handleLogOut}>Log out</Button>
+                    </>
+                    :
+                    <Typography
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="p-1 font-normal"
+                    >
+                        <Link to='/login' className="flex items-center">Login</Link>
+                    </Typography>
+            }
         </ul>
     );
 

@@ -1,17 +1,19 @@
-import React, { useContext } from 'react';
+// import { Card } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-import { Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button, } from "@material-tailwind/react";
 
 const LogIn = () => {
 
-    const { login } = useContext(AuthContext);
-    const location = useLocation();
+    const [error, setError] = useState('');
+    const { login, setLoading, googleProviderLogin, gitHubProviderLogin } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const from = location.state?.from?.pathname || '/';
 
-    const handleLogin = event => {
+    const handleSubmit = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
@@ -20,53 +22,67 @@ const LogIn = () => {
         login(email, password)
             .then(result => {
                 const user = result.user;
-
-
-                const currentUser = {
-                    email: user.email
-                }
-
-                console.log(currentUser);
+                form.reset();
+                setError('');
+                navigate(from, { replace: true });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.error(error)
+                setError(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+
+
     }
 
+    const handleGitHubSignIn = () => {
+        gitHubProviderLogin()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.error(error))
+    }
+
+    const handleGoogleSignIn = () => {
+        googleProviderLogin()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.error(error))
+    }
+
+
     return (
-        <form onSubmit={handleLogin} className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-            <Card className="w-96 mx-auto my-10">
-                <CardHeader
-                    variant="gradient"
-                    color="blue"
-                    className="mb-4 grid h-28 place-items-center"
-                >
-                    <Typography variant="h3" color="white">
+        <div class="w-1/2 mx-auto">
+            <form onSubmit={handleSubmit} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        Email:
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="email" placeholder="Enter your email" name='email' />
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                        Password
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name='password' type="password" placeholder="******************" />
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         Log In
-                    </Typography>
-                </CardHeader>
-                <CardBody className="flex flex-col gap-4">
-                    <Input label="Email" size="lg" />
-                    <Input label="Password" size="lg" />
-                    <div className="-ml-2.5">
-                        <Checkbox label="Remember Me" />
-                    </div>
-                </CardBody>
-                <CardFooter className="pt-0">
-                    <Button variant="gradient" fullWidth>Log In</Button>
-                    <Typography variant="small" className="mt-6 flex justify-center">
-                        Don't have an account?
-                        <Typography
-                            as="a"
-                            href="#signup"
-                            variant="small"
-                            color="blue"
-                            className="ml-1 font-bold"
-                        >
-                            <Link to='/register'>Register Now!</Link>
-                        </Typography>
-                    </Typography>
-                </CardFooter>
-            </Card>
-        </form>
+                    </button>
+                </div>
+                <div className="">
+                    <Button onClick={handleGoogleSignIn} variant="outlined">Sign In With Google</Button>
+                    <Button onClick={handleGitHubSignIn} variant="outlined">Sign In With GitHub</Button>
+                </div>
+                <p>New to ? Please <Link to='/register'>Register Now</Link></p>
+            </form>
+        </div>
     );
 };
 
