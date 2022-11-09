@@ -7,7 +7,13 @@ const PrivateRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading) {
-        return <h1 className='text-5xl'>Loading...</h1>
+        return <>
+            <div class="flex items-center justify-center">
+                <div class="spinner-border animate-spin border-x-yellow-900 inline-block w-8 h-8 border-4 rounded-full" role="status">
+                    <span class="visually-hidden"></span>
+                </div>
+            </div>
+        </>
     }
 
     if (user) {

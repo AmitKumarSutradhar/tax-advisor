@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import 'react-photo-view/dist/react-photo-view.css';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Card, CardBody, CardFooter, CardHeader, Typography } from '@material-tailwind/react';
+import { Card, CardBody, CardFooter, CardHeader, Textarea, Typography } from '@material-tailwind/react';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const ServiceDetail = () => {
+
     const { _id, img, price, title } = useLoaderData();
+    const [review, setReview] = useState({});
+    const [allReviews, setAllreviews] = useState([]);
+    const { user } = useContext(AuthContext);
+
+    const handleAddReview = event => {
+        event.preventDefault();
+        console.log(review);
+
+        fetch('http://localhost:5000/reviews', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(review)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    alert('Review added successfully');
+                    event.target.reset();
+                }
+            })
+    }
+
+    const handleInputBlur = event => {
+        const field = event.target.name;
+        const value = event.target.value;
+        const newService = { ...review }
+        newService[field] = value;
+        setReview(newService);
+    }
+
+
+    useEffect(() => {
+        fetch('http://localhost:5000/reviews')
+            .then(res => res.json())
+            .then(data => setAllreviews(data))
+    }, []);
+
     return (
         <div>
 
@@ -49,33 +90,29 @@ const ServiceDetail = () => {
                 </Card>
             </div>
 
-
             <h2>Part 2</h2>
+            <div className="reviews">
+                {
+                    allReviews.map(review => <p>{review.message}<br></br>{user?.email}</p>)
+                }
+            </div>
 
-            {/* <form onSubmit={handleSubmitReview} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 "> */}
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                    Email:
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="email" placeholder="Enter your email" name='email' />
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                    Password
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name='password' type="password" placeholder="******************" />
-            </div>
-            <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    Log In
-                </button>
-            </div>
-            <div className="">
-                {/* <Button onClick={handleGoogleSignIn} variant="outlined">Sign In With Google</Button>
-                    <Button onClick={handleGitHubSignIn} variant="outlined">Sign In With GitHub</Button> */}
-            </div>
-            <p>New to ? Please <Link to='/register'>Register Now</Link></p>
-            {/* </form> */}
+            <form onSubmit={handleAddReview} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                <div class="mb-4">
+                    {/* <label class="block text-gray-700 text-sm font-bold mb-2" for="text">
+                        Service Title:
+                    </label>
+                    <input onBlur={handleInputBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name='title' placeholder='name' required />
+                    <br /> */}
+
+                    <Textarea onBlur={handleInputBlur} label="Message" type="text" name='message' />
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </form>
 
         </div>
     );
