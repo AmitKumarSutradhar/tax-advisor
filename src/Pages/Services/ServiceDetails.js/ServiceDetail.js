@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import 'react-photo-view/dist/react-photo-view.css';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Card, CardBody, CardFooter, CardHeader, Textarea, Typography } from '@material-tailwind/react';
+import { Card, CardBody, CardFooter, CardHeader, Input, Textarea, Typography } from '@material-tailwind/react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const ServiceDetail = () => {
@@ -14,7 +14,7 @@ const ServiceDetail = () => {
 
     const handleAddReview = event => {
         event.preventDefault();
-        console.log(review);
+        // console.log(review);
 
         fetch('http://localhost:5000/reviews', {
             method: 'POST',
@@ -104,6 +104,15 @@ const ServiceDetail = () => {
                     </label>
                     <input onBlur={handleInputBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name='title' placeholder='name' required />
                     <br /> */}
+
+                    {user?.email ?
+                        <div className="className='mb-5">
+                            <Input onBlur={handleInputBlur} label="Email" type='email' name='email' value={user.email}></Input></div> :
+                        <div className="className='mb-5">
+                            <Input onBlur={handleInputBlur} label="Email" type='email' name='email'></Input>
+                        </div>
+
+                    }
 
                     <Textarea onBlur={handleInputBlur} label="Message" type="text" name='message' />
                 </div>

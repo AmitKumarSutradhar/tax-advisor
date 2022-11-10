@@ -34,7 +34,7 @@ const AddService = () => {
 
     const notify = () => {
         if (service) {
-            toast('Service Added!!!');
+            toast.success('Service Added!!!');
         } else {
             toast('Please try again');
         }

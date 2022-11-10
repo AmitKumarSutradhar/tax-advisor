@@ -5,6 +5,7 @@ import {
     Typography,
     Button,
     IconButton,
+    MobileNav,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
@@ -73,7 +74,7 @@ export default function NavMenu() {
                                 color="blue-gray"
                                 className="p-1 font-normal"
                             >
-                                <Link to='/' className="flex items-center">My Reviews</Link>
+                                <Link to='/myreviews' className="flex items-center">My Reviews</Link>
                             </Typography>
                             <Typography
                                 as="li"
@@ -81,7 +82,7 @@ export default function NavMenu() {
                                 color="blue-gray"
                                 className="p-1 font-normal"
                             >
-                                <Link to='/services' className="flex items-center">Add Service</Link>
+                                <Link to='/addservice' className="flex items-center">Add Service</Link>
                             </Typography>
                         </ul>
                         <Button className='ms-3 cs-btn' variant="light" onClick={handleLogOut}>Log out</Button>
@@ -153,12 +154,9 @@ export default function NavMenu() {
                     )}
                 </IconButton>
             </div>
-            {/* <MobileNav open={openNav}>
+            <MobileNav open={openNav}>
                 {navList}
-                <Button variant="gradient" size="sm" fullWidth className="mb-2">
-                    <span>Buy Now</span>
-                </Button>
-            </MobileNav> */}
+            </MobileNav>
         </Navbar>
     );
 }
