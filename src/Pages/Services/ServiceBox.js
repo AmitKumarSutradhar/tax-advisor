@@ -9,24 +9,6 @@ const ServiceBox = ({ service }) => {
     console.log(_id);
     return (
         <div className="card card-compact w-96 bg-base-100 shadow-xl">
-
-            {/* <PhotoProvider>
-                <PhotoView src={img}>
-                    <img src={img} alt="" />
-                </PhotoView>
-            </PhotoProvider>
-            <figure><img src={img} alt="Shoes" /></figure>
-            <div className="card-body">
-                <h2 className="card-title">{title}</h2>
-                <p className='text-2xl text-orange-600 font-semibold'>Price: ${price}</p>
-                <div className="card-actions justify-end">
-                    <Link to={`/services/${_id}`}>
-                        <button className="btn btn-dark">View Details</button>
-                    </Link>
-                </div>
-            </div> */}
-
-
             <Card className="w-96">
                 <CardHeader floated={false} className="h-80">
                     <PhotoProvider>

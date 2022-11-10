@@ -1,14 +1,33 @@
 import { useState, useEffect, useContext } from "react";
 import {
-    Navbar,
-    // MobileNav,
-    Typography,
+    Navbar, Typography,
     Button,
     IconButton,
     MobileNav,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
+import useDocumentTitle from "../useDocumentTitle/useDocumentTitle";
+
+
+function Page(props) {
+    return <h2>{props.content}</h2>
+}
+
+function Home() {
+    useDocumentTitle('Home title 👻')
+    return <Page content='This is Home! ' />
+}
+
+function About() {
+    useDocumentTitle('About title 👽')
+    return <Page content='About!' />
+}
+
+function Other() {
+    useDocumentTitle('Other title 👾')
+    return <Page content='And this is Other!' />
+}
 
 export default function NavMenu() {
     const [openNav, setOpenNav] = useState(false);
@@ -57,16 +76,6 @@ export default function NavMenu() {
             {
                 user?.email ?
                     <>
-                        {/* <Link className='ms-4' to="/profile">
-                            {user?.photoURL ?
-                                <img
-                                    style={{ height: '40px', width: '40px' }}
-                                    roundedCircle
-                                    src={user?.photoURL} alt=''>
-                                </img>
-                                : <>{user.email}</>
-                            }
-                        </Link> */}
                         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
                             <Typography
                                 as="li"
@@ -157,6 +166,12 @@ export default function NavMenu() {
             <MobileNav open={openNav}>
                 {navList}
             </MobileNav>
+
+            <Routes>
+                <Route exact path='/' component={Home} />
+                <Route path='/about' component={About} />
+                <Route path='/other' component={Other} />
+            </Routes>
         </Navbar>
     );
 }
